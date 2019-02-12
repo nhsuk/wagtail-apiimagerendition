@@ -1,0 +1,4 @@
+graft wagtailapiimagerendition
+prune dummy_page
+prune config
+global-exclude __pycache__
