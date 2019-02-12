@@ -78,9 +78,13 @@ You'll get all this lot installed nicely with (https://docs.docker.com/docker-fo
 ### Setup locally
 Build the image
 ```
-  docker-compose build
+docker-compose build
 ```
 Run the containers
 ```
-  docker-compose up
+docker-compose up
+```
+Create super user:
+```
+docker-compose run --rm web python manage.py createsuperuser
 ```

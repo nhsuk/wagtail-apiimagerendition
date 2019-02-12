@@ -1,4 +1,4 @@
-Django==2.1.4
+django>=2.1.5
 django-pyodbc
 django-pyodbc-azure==2.1.0.0
 wagtail==2.4
