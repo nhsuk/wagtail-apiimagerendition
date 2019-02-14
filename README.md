@@ -50,6 +50,21 @@ class HeaderImageCustomPage(ImageWithRenditions):
 ...
 ```
 
+API output exmaple:
+```json
+{
+    ...
+    "header_image": [{
+        "id": 1,
+        "meta": {
+            "type": "dummy_page.HeaderImageCustomPage"
+        },
+        "mobile_image": "/media/images/example_X257M1O.2e16d0ba.fill-100x200.jpg",
+        "desktop_image": "/media/images/example_X257M1O.2e16d0ba.fill-400x800.jpg"
+    }],
+    ...
+}
+```
 
 
 How to use ImageWithRenditionsBlock block
@@ -64,6 +79,24 @@ class CustomPage(Page):
         ('image', ImageWithRenditionsBlock()),
     ], null=True, blank=True)
 ...
+```
+
+API output exmaple:
+```json
+{
+    ...
+    "body": [{
+        "type": "image",
+        "value": {
+            "renditions": {
+                "mobile": "/media/images/example_X257M1O.2e16d0ba.fill-100x50.jpg",
+                "desktop": "/media/images/example_X257M1O.2e16d0ba.fill-400_x_200.jpg"
+            }
+        },
+        "id": "3edd3c13-d211-41ef-acf0-2a30bd57042c"
+    }]
+    ...
+}
 ```
 
 How to contribute
