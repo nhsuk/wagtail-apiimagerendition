@@ -9,7 +9,7 @@ Provide:
 Quick start
 -----------
 
-1. Add "wagtailapiimagerendition" to your INSTALLED_APPS setting like this::
+1. Add "wagtailapiimagerendition" to your INSTALLED_APPS setting like this:
 
 ```python
 INSTALLED_APPS = [
@@ -35,7 +35,7 @@ DESKTOP_RENDITION_CHOICES = (
 )
 ```
 
-2. Run `python manage.py migrate` to create the wagtailapiimagerendition models.
+3. Run `python manage.py migrate` to create the wagtailapiimagerendition models.
 
 
 How to use ImageWithRenditions field

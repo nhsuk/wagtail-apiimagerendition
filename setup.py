@@ -1,20 +1,21 @@
-import os
+from os import path
 from setuptools import find_packages, setup
+from wagtailapiimagerendition import __VERSION__
 
-with open(os.path.join(os.path.dirname(__file__), 'README.md')) as readme:
-    README = readme.read()
-
-# allow setup.py to be run from any path
-os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
+this_directory = path.abspath(path.dirname(__file__))
+with open(path.join(this_directory, 'README.md'), encoding='utf-8') as f:
+    long_description = f.read()
 
 setup(
     name='wagtail-apiimagerendition',
-    version='0.1',
+    version=__VERSION__,
     packages=find_packages(),
     include_package_data=True,
-    license='BSD License',  # example license
+    url='https://github.com/yohanlebret/wagtail-apiimagerendition',
+    license='MIT',
     description='Add renditions parameters in cms for images serve through the api',
-    long_description=README,
+    long_description=long_description,
+    long_description_content_type='text/markdown',
     author='Yohan Lebret',
     author_email='yohan.lebret@gmail.com',
     classifiers=[
@@ -24,7 +25,7 @@ setup(
         'Framework :: Wagtail',
         'Framework :: Wagtail :: 2',
         'Intended Audience :: Developers',
-        'License :: OSI Approved :: BSD License',
+        'License :: OSI Approved :: MIT License',
         'Operating System :: OS Independent',
         'Programming Language :: Python',
         'Programming Language :: Python :: 3.5',
