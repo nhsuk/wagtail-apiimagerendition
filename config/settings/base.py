@@ -29,7 +29,7 @@ ALLOWED_HOSTS = ['*']
 INSTALLED_APPS = [
     'wagtailapiimagerendition',
     'dummy_page',
-    # 'dct-admin-interface',
+    'wagtailadminstreamfieldmeta',
     
     'wagtail.contrib.forms',
     'wagtail.contrib.redirects',

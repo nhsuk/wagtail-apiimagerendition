@@ -15,10 +15,12 @@ class ImageWithRenditionsBlock(blocks.StructBlock):
     image = ImageWithRenditionsChooserBlock(required=False)
     meta_mobile_rendition = blocks.ChoiceBlock(settings.MOBILE_RENDITION_CHOICES,
                                       label='Mobile Rendition',
-                                      default='none',)
+                                      default='none',
+                                      classname='wasm-meta-field',)
     meta_desktop_rendition = blocks.ChoiceBlock(settings.DESKTOP_RENDITION_CHOICES,
                                       label='Desktop Rendition',
-                                      default='none',)
+                                      default='none',
+                                      classname='wasm-meta-field',)
 
     def get_api_representation(self, value, context=None):
         result = blocks.StructBlock.get_api_representation(self, value, context)
@@ -36,3 +38,4 @@ class ImageWithRenditionsBlock(blocks.StructBlock):
 
     class Meta:
         icon = 'image'
+        form_classname = 'wasm-meta-panel'
