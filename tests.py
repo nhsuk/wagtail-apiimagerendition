@@ -8,7 +8,7 @@ from wagtail.core.blocks.struct_block import StructValue
 from wagtail.core.models import Page
 from wagtail.tests.utils import WagtailPageTests
 
-from dummy_page.models import CustomPage, HeaderImageCustomPage
+from test_page.models import TestPage, HeaderImageTestPage
 from wagtailapiimagerendition.factories import CustomImageFactory
 from wagtailapiimagerendition.blocks import ImageWithRenditionsBlock
 
@@ -17,29 +17,29 @@ class ImageRenditionClassTests(WagtailPageTests):
     def test_rendition_image_field_original(self):
         image = CustomImageFactory()
 
-        custom_page = CustomPage(title='test', slug='test')
+        test_page = TestPage(title='test', slug='test')
         parent_page = Page.objects.get(id=2)
-        parent_page.add_child(instance=custom_page)
-        field = CustomPage._meta.get_field('body')
-        custom_page.body = StreamValue(field.stream_block, [
+        parent_page.add_child(instance=test_page)
+        field = TestPage._meta.get_field('body')
+        test_page.body = StreamValue(field.stream_block, [
             ('image', StructValue(ImageWithRenditionsBlock, [
                 ('image', image),
                 ('meta_mobile_rendition', 'none'),
                 ('meta_desktop_rendition', 'none'),
             ]))
         ])
-        custom_page.save()
+        test_page.save()
 
-        image_with_renditions = HeaderImageCustomPage(
+        image_with_renditions = HeaderImageTestPage(
             image=image,
             image_mobile_rendition='none',
             image_desktop_rendition='none',
-            custom_page=custom_page,
+            test_page=test_page,
         )
         image_with_renditions.save()
 
         c = Client()
-        response = c.get('/api/v2/pages/{}/'.format(custom_page.id))
+        response = c.get('/api/v2/pages/{}/'.format(test_page.id))
 
         self.assertEqual(response.status_code, 200)
 
@@ -71,29 +71,29 @@ class ImageRenditionClassTests(WagtailPageTests):
     def test_rendition_image_field_custom(self):
         image = CustomImageFactory()
 
-        custom_page = CustomPage(title='test', slug='test')
+        test_page = TestPage(title='test', slug='test')
         parent_page = Page.objects.get(id=2)
-        parent_page.add_child(instance=custom_page)
-        field = CustomPage._meta.get_field('body')
-        custom_page.body = StreamValue(field.stream_block, [
+        parent_page.add_child(instance=test_page)
+        field = TestPage._meta.get_field('body')
+        test_page.body = StreamValue(field.stream_block, [
             ('image', StructValue(ImageWithRenditionsBlock, [
                 ('image', image),
                 ('meta_mobile_rendition', '100x50'),
                 ('meta_desktop_rendition', '400x200'),
             ]))
         ])
-        custom_page.save()
+        test_page.save()
 
-        image_with_renditions = HeaderImageCustomPage(
+        image_with_renditions = HeaderImageTestPage(
             image=image,
             image_mobile_rendition='100x200',
             image_desktop_rendition='400x800',
-            custom_page=custom_page,
+            test_page=test_page,
         )
         image_with_renditions.save()
 
         c = Client()
-        response = c.get('/api/v2/pages/{}/'.format(custom_page.id))
+        response = c.get('/api/v2/pages/{}/'.format(test_page.id))
 
         self.assertEqual(response.status_code, 200)
 

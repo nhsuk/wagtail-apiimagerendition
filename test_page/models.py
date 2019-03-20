@@ -11,11 +11,11 @@ from wagtailapiimagerendition.blocks import ImageWithRenditionsBlock
 from wagtailapiimagerendition.fields import ImageWithRenditions
 
 
-class HeaderImageCustomPage(ImageWithRenditions):
-    custom_page = ParentalKey('CustomPage', on_delete=models.CASCADE, related_name='header_image')
+class HeaderImageTestPage(ImageWithRenditions):
+    test_page = ParentalKey('TestPage', on_delete=models.CASCADE, related_name='header_image')
 
 
-class CustomPage(Page):
+class TestPage(Page):
     body = StreamField([
         ('image', ImageWithRenditionsBlock()),
     ], null=True, blank=True)

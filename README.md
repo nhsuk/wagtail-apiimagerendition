@@ -41,12 +41,12 @@ DESKTOP_RENDITION_CHOICES = (
 How to use ImageWithRenditions field
 ------------------------------------
 
-In your models.py file (in this example the page models is name CustomPage and the image attribute is header_image)
+In your models.py file (in this example the page models is name TestPage and the image attribute is header_image)
 ```python
 from wagtailapiimagerendition.fields import ImageWithRenditions
 ...
-class HeaderImageCustomPage(ImageWithRenditions):
-    custom_page = ParentalKey('CustomPage', on_delete=models.CASCADE, related_name='header_image')
+class HeaderImageTestPage(ImageWithRenditions):
+    test_page = ParentalKey('TestPage', on_delete=models.CASCADE, related_name='header_image')
 ...
 ```
 
@@ -57,7 +57,7 @@ API output exmaple:
     "header_image": [{
         "id": 1,
         "meta": {
-            "type": "dummy_page.HeaderImageCustomPage"
+            "type": "test_page.HeaderImageTestPage"
         },
         "mobile_image": "/media/images/example_X257M1O.2e16d0ba.fill-100x200.jpg",
         "desktop_image": "/media/images/example_X257M1O.2e16d0ba.fill-400x800.jpg"
@@ -70,11 +70,11 @@ API output exmaple:
 How to use ImageWithRenditionsBlock block
 -----------------------------------------
 
-In your models.py file (in this example the page models is name CustomPage and the image attribute is header_image)
+In your models.py file (in this example the page models is name TestPage and the image attribute is header_image)
 ```python
 from wagtailapiimagerendition.blocks import ImageWithRenditionsBlock
 ...
-class CustomPage(Page):
+class TestPage(Page):
     body = StreamField([
         ('image', ImageWithRenditionsBlock()),
     ], null=True, blank=True)

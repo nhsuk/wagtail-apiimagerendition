@@ -28,7 +28,7 @@ ALLOWED_HOSTS = ['*']
 
 INSTALLED_APPS = [
     'wagtailapiimagerendition',
-    'dummy_page',
+    'test_page',
     'wagtailadminstreamfieldmeta',
     
     'wagtail.contrib.forms',
@@ -203,6 +203,7 @@ MOBILE_RENDITION_CHOICES = (
     ('100x50', '100 x 50'),
     ('100x200', '100 x 200'),
     ('150x150', '150 x 150'),
+    ('151x151', '151 x 151'),
 )
 
 DESKTOP_RENDITION_CHOICES = (
@@ -210,4 +211,5 @@ DESKTOP_RENDITION_CHOICES = (
     ('400x200', '400 x 200'),
     ('400x800', '400 x 800'),
     ('600x600', '600 x 600'),
+    ('601x601', '601 x 601'),
 )

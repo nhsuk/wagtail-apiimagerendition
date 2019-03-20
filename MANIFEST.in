@@ -1,4 +1,4 @@
 graft wagtailapiimagerendition
-prune dummy_page
+prune test_page
 prune config
-global-exclude __pycache__
+global-exclude __pycache__/*

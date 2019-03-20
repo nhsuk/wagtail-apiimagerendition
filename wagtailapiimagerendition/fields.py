@@ -56,3 +56,6 @@ class ImageWithRenditions(models.Model):
         APIField('mobile_image'),
         APIField('desktop_image'),
     ]
+
+    class Meta:
+        abstract = True
