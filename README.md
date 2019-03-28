@@ -9,13 +9,15 @@ Provide:
 Quick start
 -----------
 
-1. Add "wagtailapiimagerendition" to your INSTALLED_APPS setting like this:
+1. Add "wagtailapiimagerendition" to your INSTALLED_APPS and add WAGTAILIMAGES_IMAGE_MODEL your settings file like this:
 
 ```python
 INSTALLED_APPS = [
     'wagtailapiimagerendition',
     ...
 ]
+
+WAGTAILIMAGES_IMAGE_MODEL = 'wagtailapiimagerendition.CustomImage'
 ```
 
 2. Add MOBILE_RENDITION_CHOICES and DESKTOP_RENDITION_CHOICES settings (example)
@@ -109,6 +111,10 @@ You'll get all this lot installed nicely with (https://docs.docker.com/docker-fo
 
 
 ### Setup locally
+Add git hook
+```
+./scripts/install-hooks.sh
+```
 Build the image
 ```
 docker-compose build

@@ -19,7 +19,7 @@ services:
       SITE_ENV: 'Live'
       CMS_ENV: ${CMS_ENV}
     build: .
-    command: bash -c "python3 ./manage.py migrate && python3 ./manage.py runserver 0.0.0.0:8000"
+    command: bash -c "./scripts/wait-for-it.sh db:1433 -- python3 ./manage.py migrate && python3 ./manage.py runserver 0.0.0.0:8000"
     volumes:
       - .:/code
       - ./frontend:/code/frontend
