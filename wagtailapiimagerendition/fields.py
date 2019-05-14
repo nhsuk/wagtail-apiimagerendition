@@ -40,9 +40,11 @@ class ImageWithRenditions(models.Model):
                                       default='none',
                                       max_length=10)
 
+    @property
     def mobile_image(self):
         return self.image.generate_and_get_rendition(self.image_mobile_rendition)
     
+    @property
     def desktop_image(self):
         return self.image.generate_and_get_rendition(self.image_desktop_rendition)
 

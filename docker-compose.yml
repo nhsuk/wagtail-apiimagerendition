@@ -2,12 +2,9 @@ version: '3'
 
 services:
   db:
-    image: "microsoft/mssql-server-linux:2017-latest"
-    environment:
-      SA_PASSWORD: "msSQL_password"
-      ACCEPT_EULA: "Y"
+    image: "postgres:11"
     ports:
-      - "1433:1433"
+      - "5432:5432"
   web:
     environment:
       HAY_DEBUG: "True"
@@ -15,11 +12,10 @@ services:
       DB_HOST: "${DB_HOST}"
       DB_PORT: "${DB_PORT}"
       DB_USER: "${DB_USER}"
-      DB_PASSWORD: "${DB_PASSWORD}"
       SITE_ENV: 'Live'
       CMS_ENV: ${CMS_ENV}
     build: .
-    command: bash -c "./scripts/wait-for-it.sh db:1433 -- python3 ./manage.py migrate && python3 ./manage.py runserver 0.0.0.0:8000"
+    command: bash -c "./scripts/wait-for-it.sh db:5432 -- python3 ./manage.py migrate && python3 ./manage.py runserver 0.0.0.0:8000"
     volumes:
       - .:/code
       - ./frontend:/code/frontend

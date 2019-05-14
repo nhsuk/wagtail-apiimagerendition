@@ -127,18 +127,13 @@ WSGI_APPLICATION = 'wsgi.application'
 
 DATABASES = {
     'default': {
-      'NAME': os.environ.get('DB_NAME', 'master'),
-      'ENGINE': 'sql_server.pyodbc',
-      'HOST': os.environ.get('DB_HOST', 'db'),
-      'PORT': os.environ.get('DB_PORT', 1433),
-      'USER': os.environ.get('DB_USER', 'sa'),
-      'PASSWORD': os.environ.get('DB_PASSWORD'),
-      'OPTIONS': {
-        'host_is_server': True,
-        'driver': 'ODBC Driver 13 for SQL Server',
-        },
-      }
+        'NAME': os.environ.get('DB_NAME', 'master'),
+        'ENGINE': 'django.db.backends.postgresql',
+        'HOST': os.environ.get('DB_HOST', 'db'),
+        'PORT': os.environ.get('DB_PORT', 1433),
+        'USER': os.environ.get('DB_USER', 'sa'),
     }
+}
 
 CACHES = {
     'default': {
