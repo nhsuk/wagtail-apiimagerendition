@@ -1,3 +1,8 @@
+"""
+.. module:: settings.tests
+"""
+
+import os
 import json
 from PIL import Image
 
@@ -11,10 +16,37 @@ from wagtail.tests.utils import WagtailPageTests
 from test_page.models import TestPage, HeaderImageTestPage
 from wagtailapiimagerendition.factories import CustomImageFactory
 from wagtailapiimagerendition.blocks import ImageWithRenditionsBlock
+from wagtailapiimagerendition.models import ImageRendition
+
 
 class ImageRenditionClassTests(WagtailPageTests):
+    """ ImageRenditionClassTests """
+
+    def test_custom_image_link(self):
+        """ test_custom_image_link """
+        image = CustomImageFactory()
+        self.assertRegex(image.link, r'^/media/original_images/example_[A-z0-9]+\.jpg$')
+
+        image.file.delete(False)
+        self.assertEqual(image.link, '')
+
+    def test_image_delete_file(self):
+        """ test_image_delete_file """
+        image = CustomImageFactory()
+        file = image.file.path
+        image.generate_and_get_rendition('100x50')
+        image_rendition = ImageRendition.objects.get(image=image)
+        file_rendition = image_rendition.file.path
+        self.assertTrue(os.path.exists(file))
+        self.assertTrue(os.path.exists(file_rendition))
+
+        image.delete()
+        self.assertFalse(os.path.exists(file))
+        self.assertFalse(os.path.exists(file_rendition))
+
 
     def test_rendition_image_field_original(self):
+        """ test_rendition_image_field_original """
         image = CustomImageFactory()
 
         test_page = TestPage(title='test', slug='test')
@@ -52,23 +84,27 @@ class ImageRenditionClassTests(WagtailPageTests):
         self.assertEqual(width, 1200)
         self.assertEqual(height, 1200)
 
-        desktop_header_image = Image.open('./{}'.format(content['header_image'][0]['desktop_image']))
+        desktop_header_image = Image.open('./{}'.format(
+            content['header_image'][0]['desktop_image']))
         width, height = desktop_header_image.size
         self.assertEqual(width, 1200)
         self.assertEqual(height, 1200)
 
-        mobile_body_image = Image.open('./{}'.format(content['body'][0]['value']['renditions']['mobile']))
+        mobile_body_image = Image.open('./{}'.format(
+            content['body'][0]['value']['renditions']['mobile']))
         width, height = mobile_body_image.size
         self.assertEqual(width, 1200)
         self.assertEqual(height, 1200)
 
-        desktop_body_image = Image.open('./{}'.format(content['body'][0]['value']['renditions']['desktop']))
+        desktop_body_image = Image.open('./{}'.format(
+            content['body'][0]['value']['renditions']['desktop']))
         width, height = desktop_body_image.size
         self.assertEqual(width, 1200)
         self.assertEqual(height, 1200)
 
 
     def test_rendition_image_field_custom(self):
+        """ test_rendition_image_field_custom """
         image = CustomImageFactory()
 
         test_page = TestPage(title='test', slug='test')
@@ -106,17 +142,20 @@ class ImageRenditionClassTests(WagtailPageTests):
         self.assertEqual(width, 100)
         self.assertEqual(height, 200)
 
-        desktop_header_image = Image.open('./{}'.format(content['header_image'][0]['desktop_image']))
+        desktop_header_image = Image.open('./{}'.format(
+            content['header_image'][0]['desktop_image']))
         width, height = desktop_header_image.size
         self.assertEqual(width, 400)
         self.assertEqual(height, 800)
 
-        mobile_body_image = Image.open('./{}'.format(content['body'][0]['value']['renditions']['mobile']))
+        mobile_body_image = Image.open('./{}'.format(
+            content['body'][0]['value']['renditions']['mobile']))
         width, height = mobile_body_image.size
         self.assertEqual(width, 100)
         self.assertEqual(height, 50)
 
-        desktop_body_image = Image.open('./{}'.format(content['body'][0]['value']['renditions']['desktop']))
+        desktop_body_image = Image.open('./{}'.format(
+            content['body'][0]['value']['renditions']['desktop']))
         width, height = desktop_body_image.size
         self.assertEqual(width, 400)
         self.assertEqual(height, 200)

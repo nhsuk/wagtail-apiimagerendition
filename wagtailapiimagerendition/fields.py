@@ -1,4 +1,6 @@
-from rest_framework import serializers
+"""
+.. module:: wagtailapiimagerendition.fields
+"""
 
 from django.db import models
 from django.conf import settings
@@ -24,6 +26,7 @@ if hasattr(settings, 'DESKTOP_RENDITION_CHOICES'):
 
 
 class ImageWithRenditions(models.Model):
+    """ ImageWithRenditions """
     image = models.ForeignKey(
         'wagtailapiimagerendition.CustomImage',
         null=True,
@@ -31,21 +34,27 @@ class ImageWithRenditions(models.Model):
         on_delete=models.SET_NULL,
         related_name='+'
     )
-    image_mobile_rendition = models.CharField(choices=MOBILE_RENDITION_CHOICES,
-                                      verbose_name='Mobile Rendition',
-                                      default='none',
-                                      max_length=10)
-    image_desktop_rendition = models.CharField(choices=DESKTOP_RENDITION_CHOICES,
-                                      verbose_name='Desktop Rendition',
-                                      default='none',
-                                      max_length=10)
+    image_mobile_rendition = models.CharField(
+        choices=MOBILE_RENDITION_CHOICES,
+        verbose_name='Mobile Rendition',
+        default='none',
+        max_length=10,
+    )
+    image_desktop_rendition = models.CharField(
+        choices=DESKTOP_RENDITION_CHOICES,
+        verbose_name='Desktop Rendition',
+        default='none',
+        max_length=10,
+    )
 
     @property
     def mobile_image(self):
+        """ mobile_image """
         return self.image.generate_and_get_rendition(self.image_mobile_rendition)
-    
+
     @property
     def desktop_image(self):
+        """ desktop_image """
         return self.image.generate_and_get_rendition(self.image_desktop_rendition)
 
     panels = [
@@ -60,4 +69,5 @@ class ImageWithRenditions(models.Model):
     ]
 
     class Meta:
+        """ Meta """
         abstract = True

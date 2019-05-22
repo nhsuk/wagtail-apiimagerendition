@@ -1,3 +1,7 @@
+"""
+.. module:: api
+"""
+
 from wagtail.api.v2.endpoints import PagesAPIEndpoint
 from wagtail.api.v2.router import WagtailAPIRouter
 from wagtail.images.api.v2.endpoints import ImagesAPIEndpoint

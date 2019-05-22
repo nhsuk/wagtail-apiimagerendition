@@ -1,10 +1,11 @@
+""" setup """
 from os import path
 from setuptools import find_packages, setup
 from wagtailapiimagerendition import __VERSION__
 
-this_directory = path.abspath(path.dirname(__file__))
-with open(path.join(this_directory, 'README.md'), encoding='utf-8') as f:
-    long_description = f.read()
+THIS_DIRECTORY = path.abspath(path.dirname(__file__))
+with open(path.join(THIS_DIRECTORY, 'README.md'), encoding='utf-8') as f:
+    LONG_DESCRIPTION = f.read()
 
 setup(
     name='wagtail-apiimagerendition',
@@ -14,7 +15,7 @@ setup(
     url='https://github.com/yohanlebret/wagtail-apiimagerendition',
     license='MIT',
     description='Add renditions parameters in cms for images serve through the api',
-    long_description=long_description,
+    long_description=LONG_DESCRIPTION,
     long_description_content_type='text/markdown',
     author='Yohan Lebret',
     author_email='yohan.lebret@gmail.com',

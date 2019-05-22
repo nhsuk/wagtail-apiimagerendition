@@ -1,3 +1,7 @@
+"""
+.. module:: test_page.models
+"""
+
 from modelcluster.fields import ParentalKey
 
 from django.db import models
@@ -12,10 +16,12 @@ from wagtailapiimagerendition.fields import ImageWithRenditions
 
 
 class HeaderImageTestPage(ImageWithRenditions):
+    """ HeaderImageTestPage """
     test_page = ParentalKey('TestPage', on_delete=models.CASCADE, related_name='header_image')
 
 
 class TestPage(Page):
+    """ TestPage """
     body = StreamField([
         ('image', ImageWithRenditionsBlock()),
     ], null=True, blank=True)

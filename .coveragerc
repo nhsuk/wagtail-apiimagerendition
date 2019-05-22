@@ -1,0 +1,7 @@
+[run]
+omit =
+    ./wagtailapiimagerendition/tests.py
+    ./wagtailapiimagerendition/apps.py
+    ./wagtailapiimagerendition/factories.py
+    ./wagtailapiimagerendition/migrations/*
+source = wagtailapiimagerendition

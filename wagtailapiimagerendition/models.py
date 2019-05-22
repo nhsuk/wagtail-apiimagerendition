@@ -1,36 +1,40 @@
-import operator
-from functools import reduce
+"""
+.. module:: wagtailapiimagerendition.models
+"""
 
 from django.db import models
-from django.db.models import Q
 from django.db.models.signals import post_delete
 from django.dispatch import receiver
 
-from wagtail.core.models import PageRevision
 from wagtail.images.models import Image, AbstractImage, AbstractRendition
 
 
 class CustomImage(AbstractImage):
+    """ CustomImage """
     admin_form_fields = Image.admin_form_fields + ()
-    
+
     @property
     def link(self):
+        """ link """
         if self.file:
             return self.file.url
         else:
             return ''
 
     def generate_and_get_rendition(self, rendition_size):
+        """ generate_and_get_rendition """
         if not self.file or rendition_size == 'none':
             return self.file.url
         else:
             return self.get_rendition('fill-{}'.format(rendition_size)).url
 
     def save(self, *args, **kwargs):
+        """ save """
         super(CustomImage, self).save(*args, **kwargs)
 
 
 class ImageRendition(AbstractRendition):
+    """ ImageRendition """
     image = models.ForeignKey(
         CustomImage,
         related_name='renditions',
@@ -38,6 +42,7 @@ class ImageRendition(AbstractRendition):
     )
 
     class Meta:
+        """ Meta """
         unique_together = (
             ('image', 'filter_spec', 'focal_point_key'),
         )
@@ -45,11 +50,7 @@ class ImageRendition(AbstractRendition):
 
 # Delete the source image file when an image is deleted
 @receiver(post_delete, sender=CustomImage)
-def image_delete(sender, instance, **kwargs):
-    instance.file.delete(False)
-
-
-# Delete the rendition image file when a rendition is deleted
 @receiver(post_delete, sender=ImageRendition)
-def rendition_delete(sender, instance, **kwargs):
+def image_delete(sender, instance, **kwargs):
+    """ image_delete """
     instance.file.delete(False)
