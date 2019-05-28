@@ -1,5 +1,5 @@
 """
-.. module:: settings.tests
+.. module:: tests
 """
 
 import os
