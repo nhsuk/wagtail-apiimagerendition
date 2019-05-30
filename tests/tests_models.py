@@ -25,7 +25,7 @@ class ImageRenditionClassTests(WagtailPageTests):
     def test_custom_image_link(self):
         """ test_custom_image_link """
         image = CustomImageFactory()
-        self.assertRegex(image.link, r'^/media/original_images/example_[A-z0-9]+\.jpg$')
+        self.assertRegex(image.link, r'^/media/original_images/example.jpg$')
 
         image.file.delete(False)
         self.assertEqual(image.link, '')
@@ -43,7 +43,6 @@ class ImageRenditionClassTests(WagtailPageTests):
         image.delete()
         self.assertFalse(os.path.exists(file))
         self.assertFalse(os.path.exists(file_rendition))
-
 
     def test_rendition_image_field_original(self):
         """ test_rendition_image_field_original """
@@ -101,7 +100,7 @@ class ImageRenditionClassTests(WagtailPageTests):
         width, height = desktop_body_image.size
         self.assertEqual(width, 1200)
         self.assertEqual(height, 1200)
-
+        image.delete()
 
     def test_rendition_image_field_custom(self):
         """ test_rendition_image_field_custom """
@@ -159,3 +158,4 @@ class ImageRenditionClassTests(WagtailPageTests):
         width, height = desktop_body_image.size
         self.assertEqual(width, 400)
         self.assertEqual(height, 200)
+        image.delete()

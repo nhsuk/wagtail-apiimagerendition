@@ -14,4 +14,4 @@ class CustomImageFactory(factory.django.DjangoModelFactory):
         model = CustomImage
 
     title = fuzzy.FuzzyText()
-    file = factory.django.ImageField(color='blue', width=1200, height=1200)
+    file = factory.django.ImageField(filename='example.jpg', color='blue', width=1200, height=1200)
