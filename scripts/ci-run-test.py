@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 
-echo "Running pre-push hook"
+echo "Running CI Test"
 docker-compose run --rm web coverage run manage.py test
 
 # $? stores exit value of the last command

@@ -1,0 +1,11 @@
+trigger:
+- master
+
+pool:
+  vmImage: 'ubuntu-16.04'
+
+steps:
+- script: |
+    docker-compose build
+    ./scripts/ci-run-test.py
+  displayName: 'Run unitest and coverage'
