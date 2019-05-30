@@ -17,7 +17,7 @@ setup(
     version=__VERSION__,
     packages=find_packages(),
     include_package_data=True,
-    url='https://github.com/yohanlebret/wagtail-apiimagerendition',
+    url='https://github.com/nhsuk/wagtail-adminstreamfieldmeta',
     license='MIT',
     description='Add renditions parameters in cms for images serve through the api',
     long_description=LONG_DESCRIPTION,
