@@ -19,18 +19,19 @@ class ImageWithRenditionsChooserBlock(ImageChooserBlock):
 
 class ImageWithRenditionsBlock(blocks.StructBlock):
     """ImageWithRenditionsBlock """
+    _content_fields = ['image']
+    _settings_fields = ['meta_mobile_rendition', 'meta_desktop_rendition']
+
     image = ImageWithRenditionsChooserBlock(required=False)
     meta_mobile_rendition = blocks.ChoiceBlock(
         settings.MOBILE_RENDITION_CHOICES,
         label='Mobile Rendition',
         default='none',
-        classname='wasm-meta-field',
     )
     meta_desktop_rendition = blocks.ChoiceBlock(
         settings.DESKTOP_RENDITION_CHOICES,
         label='Desktop Rendition',
         default='none',
-        classname='wasm-meta-field',
     )
 
     def get_api_representation(self, value, context=None):
@@ -51,6 +52,31 @@ class ImageWithRenditionsBlock(blocks.StructBlock):
         return image
 
     class Meta:
-        """ Meta """
         icon = 'image'
-        form_classname = 'wasm-meta-panel'
+
+    def get_tabs_definition(self):
+        return {
+            'content': {
+                'key': 'content',
+                'label': 'Content',
+                'fields': self.__class__._content_fields,
+            },
+            'settings': {
+                'key': 'settings',
+                'label': 'Settings',
+                'fields': self.__class__._settings_fields,
+            },
+        }
+
+    def get_definition(self):
+        definition = super().get_definition()
+        definition['collapsible'] = True
+        definition['closed'] = False
+
+        # Add tabs
+        definition['tabs'] = []
+        tabs = self.get_tabs_definition()
+        for tab_name in ['content', 'settings']:
+            definition['tabs'].append(tabs[tab_name])
+
+        return definition

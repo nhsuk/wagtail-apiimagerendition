@@ -21,7 +21,7 @@ ALLOWED_HOSTS = ['*']
 INSTALLED_APPS = [
     'wagtailapiimagerendition',
     'test_page',
-    'wagtailadminstreamfieldmeta',
+    'wagtail_react_streamfield',
 
     'wagtail.contrib.forms',
     'wagtail.contrib.redirects',

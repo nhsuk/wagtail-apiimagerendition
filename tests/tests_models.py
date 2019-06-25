@@ -159,3 +159,20 @@ class ImageRenditionClassTests(WagtailPageTests):
         self.assertEqual(width, 400)
         self.assertEqual(height, 200)
         image.delete()
+
+    def test_rendition_image_block_definition(self):
+        """ test_rendition_image_field_original """
+        image_block = ImageWithRenditionsBlock()
+        definition = image_block.get_definition()
+
+        self.assertTrue(definition['collapsible'])
+        self.assertFalse(definition['closed'])
+        self.assertEqual(definition['tabs'], [{
+            'key': 'content',
+            'label': 'Content',
+            'fields': ['image'],
+        }, {
+            'key': 'settings',
+            'label': 'Settings',
+            'fields': ['meta_mobile_rendition', 'meta_desktop_rendition'],
+        }])
