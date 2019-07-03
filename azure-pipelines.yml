@@ -9,7 +9,7 @@ jobs:
   steps:
   - script: |
       docker-compose build
-      ./scripts/ci-run-test.py
+      ./scripts/ci-run-test.sh
     displayName: 'Run unitest and coverage'
 
 
