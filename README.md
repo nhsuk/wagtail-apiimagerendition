@@ -79,7 +79,7 @@ from wagtailapiimagerendition.blocks import ImageWithRenditionsBlock
 class TestPage(Page):
     body = StreamField([
         ('image', ImageWithRenditionsBlock()),
-    ], null=True, blank=True)
+    ], blank=True)
 ...
 ```
 
