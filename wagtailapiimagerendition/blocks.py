@@ -7,22 +7,13 @@ from django.conf import settings
 from wagtail.core import blocks
 from wagtail.images.blocks import ImageChooserBlock
 
-from .serializers import ImageSerializer
-
-
-class ImageWithRenditionsChooserBlock(ImageChooserBlock):
-    """ ImageWithRenditionsChooserBlock """
-    def get_api_representation(self, value, context=None):
-        """ get_api_representation """
-        return ImageSerializer(context=context, required=False).to_representation(value)
-
 
 class ImageWithRenditionsBlock(blocks.StructBlock):
     """ImageWithRenditionsBlock """
     _content_fields = ['image']
     _settings_fields = ['meta_mobile_rendition', 'meta_desktop_rendition']
 
-    image = ImageWithRenditionsChooserBlock(required=False)
+    image = ImageChooserBlock(required=False)
     meta_mobile_rendition = blocks.ChoiceBlock(
         settings.MOBILE_RENDITION_CHOICES,
         label='Mobile Rendition',
@@ -34,15 +25,17 @@ class ImageWithRenditionsBlock(blocks.StructBlock):
         default='none',
     )
 
+    class Meta:
+        icon = 'image'
+
     def get_api_representation(self, value, context=None):
         """ get_api_representation """
         result = blocks.StructBlock.get_api_representation(self, value, context)
 
         if 'image' in result:
-            image = result['image']
+            image = {}
             meta_mobile_rendition = result['meta_mobile_rendition']
             meta_desktop_rendition = result['meta_desktop_rendition']
-
             image['renditions'] = {
                 'mobile': value['image'].generate_and_get_rendition(meta_mobile_rendition) \
                     if value['image'] else None,
@@ -50,9 +43,6 @@ class ImageWithRenditionsBlock(blocks.StructBlock):
                     if value['image'] else None,
             }
         return image
-
-    class Meta:
-        icon = 'image'
 
     def get_tabs_definition(self):
         return {

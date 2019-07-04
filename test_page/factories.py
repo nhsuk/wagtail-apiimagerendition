@@ -4,7 +4,7 @@
 
 import factory
 from factory import fuzzy
-from wagtailapiimagerendition.models import CustomImage
+from .models import CustomImage
 
 
 class CustomImageFactory(factory.django.DjangoModelFactory):

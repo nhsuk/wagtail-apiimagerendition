@@ -174,7 +174,7 @@ SITE_ENV = os.environ.get('SITE_ENV', 'db')
 # e.g. in notification emails. Don't include '/admin' or a trailing slash
 BASE_URL = 'http://example.com'
 
-WAGTAILIMAGES_IMAGE_MODEL = 'wagtailapiimagerendition.CustomImage'
+WAGTAILIMAGES_IMAGE_MODEL = 'test_page.CustomImage'
 WAGTAIL_USAGE_COUNT_ENABLED = True
 
 # DEFAULT_FILE_STORAGE = 'storages.backends.azure_storage.AzureStorage'
