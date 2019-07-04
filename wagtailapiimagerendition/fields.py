@@ -7,6 +7,7 @@ from django.conf import settings
 
 from wagtail.admin.edit_handlers import FieldPanel
 from wagtail.api import APIField
+from wagtail.images import get_image_model_string
 from wagtail.images.edit_handlers import ImageChooserPanel
 
 
@@ -28,7 +29,7 @@ if hasattr(settings, 'DESKTOP_RENDITION_CHOICES'):
 class ImageWithRenditions(models.Model):
     """ ImageWithRenditions """
     image = models.ForeignKey(
-        'wagtailapiimagerendition.CustomImage',
+        get_image_model_string(),
         null=True,
         blank=True,
         on_delete=models.SET_NULL,

@@ -13,14 +13,13 @@ from wagtail.core.blocks.struct_block import StructValue
 from wagtail.core.models import Page
 from wagtail.tests.utils import WagtailPageTests
 
-from test_page.models import TestPage, HeaderImageTestPage
-from wagtailapiimagerendition.factories import CustomImageFactory
+from test_page.factories import CustomImageFactory
+from test_page.models import CustomImageRendition, TestPage, HeaderImageTestPage
 from wagtailapiimagerendition.blocks import ImageWithRenditionsBlock
-from wagtailapiimagerendition.models import ImageRendition
 
 
-class ImageRenditionClassTests(WagtailPageTests):
-    """ ImageRenditionClassTests """
+class CustomImageRenditionClassTests(WagtailPageTests):
+    """ CustomImageRenditionClassTests """
 
     def test_custom_image_link(self):
         """ test_custom_image_link """
@@ -35,7 +34,7 @@ class ImageRenditionClassTests(WagtailPageTests):
         image = CustomImageFactory()
         file = image.file.path
         image.generate_and_get_rendition('100x50')
-        image_rendition = ImageRendition.objects.get(image=image)
+        image_rendition = CustomImageRendition.objects.get(image=image)
         file_rendition = image_rendition.file.path
         self.assertTrue(os.path.exists(file))
         self.assertTrue(os.path.exists(file_rendition))
