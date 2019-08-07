@@ -51,12 +51,18 @@ class ImageWithRenditions(models.Model):
     @property
     def mobile_image(self):
         """ mobile_image """
-        return self.image.generate_and_get_rendition(self.image_mobile_rendition)
+        mobile_image = self.image.generate_and_get_rendition(self.image_mobile_rendition)
+        if hasattr(settings, 'LOCAL_ASSET_FULL_PATH') and settings.LOCAL_ASSET_FULL_PATH:
+            mobile_image = 'http://localhost:8000{0}'.format(mobile_image)
+        return mobile_image
 
     @property
     def desktop_image(self):
         """ desktop_image """
-        return self.image.generate_and_get_rendition(self.image_desktop_rendition)
+        desktop_image = self.image.generate_and_get_rendition(self.image_desktop_rendition)
+        if hasattr(settings, 'LOCAL_ASSET_FULL_PATH') and settings.LOCAL_ASSET_FULL_PATH:
+            desktop_image = 'http://localhost:8000{0}'.format(desktop_image)
+        return desktop_image
 
     panels = [
         ImageChooserPanel('image'),

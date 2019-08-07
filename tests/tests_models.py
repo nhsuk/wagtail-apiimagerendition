@@ -2,9 +2,10 @@
 .. module:: tests
 """
 
-import os
-import json
 from PIL import Image
+import json
+import os
+import re
 
 from django.test import Client
 
@@ -28,6 +29,7 @@ class CustomImageRenditionClassTests(WagtailPageTests):
 
         image.file.delete(False)
         self.assertEqual(image.link, '')
+        image.delete()
 
     def test_image_delete_file(self):
         """ test_image_delete_file """
@@ -99,6 +101,29 @@ class CustomImageRenditionClassTests(WagtailPageTests):
         width, height = desktop_body_image.size
         self.assertEqual(width, 1200)
         self.assertEqual(height, 1200)
+
+        with self.settings(LOCAL_ASSET_FULL_PATH=True):
+            self.assertEqual(
+                image_with_renditions.mobile_image,
+                'http://localhost:8000/media/original_images/example.jpg',
+            )
+            self.assertEqual(
+                image_with_renditions.desktop_image,
+                'http://localhost:8000/media/original_images/example.jpg',
+            )
+            c = Client()
+            response = c.get('/api/v2/pages/{}/'.format(test_page.id))
+            self.assertEqual(response.status_code, 200)
+            content = json.loads(response.content)
+            self.assertEqual(
+                content['body'][0]['value']['renditions']['mobile'],
+                'http://localhost:8000/media/original_images/example.jpg',
+            )
+            self.assertEqual(
+                content['body'][0]['value']['renditions']['desktop'],
+                'http://localhost:8000/media/original_images/example.jpg',
+            )
+
         image.delete()
 
     def test_rendition_image_field_custom(self):
@@ -157,6 +182,28 @@ class CustomImageRenditionClassTests(WagtailPageTests):
         width, height = desktop_body_image.size
         self.assertEqual(width, 400)
         self.assertEqual(height, 200)
+
+
+        with self.settings(LOCAL_ASSET_FULL_PATH=True):
+            regexp = re.compile('^http\:\/\/localhost\:8000\/media\/images\/example\.[A-z0-9]+\.fill-[0-9]+x[0-9]+\.jpg$')
+            self.assertIsNotNone(
+                regexp.match(image_with_renditions.mobile_image)
+            )
+            self.assertIsNotNone(
+                regexp.match(image_with_renditions.desktop_image)
+            )
+
+            c = Client()
+            response = c.get('/api/v2/pages/{}/'.format(test_page.id))
+            self.assertEqual(response.status_code, 200)
+            content = json.loads(response.content)
+            self.assertIsNotNone(
+                regexp.match(content['body'][0]['value']['renditions']['mobile'])
+            )
+            self.assertIsNotNone(
+                regexp.match(content['body'][0]['value']['renditions']['desktop'])
+            )
+
         image.delete()
 
     def test_rendition_image_block_definition(self):

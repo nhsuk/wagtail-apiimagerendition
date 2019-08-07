@@ -36,11 +36,21 @@ class ImageWithRenditionsBlock(blocks.StructBlock):
             image = {}
             meta_mobile_rendition = result['meta_mobile_rendition']
             meta_desktop_rendition = result['meta_desktop_rendition']
+
+            mobile_image = value['image'].generate_and_get_rendition(meta_mobile_rendition) \
+                if value['image'] else None
+            desktop_image = value['image'].generate_and_get_rendition(meta_desktop_rendition) \
+                if value['image'] else None
+
+            if hasattr(settings, 'LOCAL_ASSET_FULL_PATH') and settings.LOCAL_ASSET_FULL_PATH:
+                if mobile_image:
+                    mobile_image = 'http://localhost:8000{0}'.format(mobile_image)
+                if desktop_image:
+                    desktop_image = 'http://localhost:8000{0}'.format(desktop_image)
+
             image['renditions'] = {
-                'mobile': value['image'].generate_and_get_rendition(meta_mobile_rendition) \
-                    if value['image'] else None,
-                'desktop': value['image'].generate_and_get_rendition(meta_desktop_rendition) \
-                    if value['image'] else None,
+                'mobile': mobile_image,
+                'desktop': desktop_image,
             }
         return image
 
