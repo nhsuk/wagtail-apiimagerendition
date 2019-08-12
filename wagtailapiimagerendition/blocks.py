@@ -52,6 +52,7 @@ class ImageWithRenditionsBlock(blocks.StructBlock):
                 'mobile': mobile_image,
                 'desktop': desktop_image,
             }
+            image['title'] = value['image'].title if value['image'] else None
         return image
 
     def get_tabs_definition(self):
