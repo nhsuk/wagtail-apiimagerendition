@@ -2,9 +2,13 @@ version: '3'
 
 services:
   db:
+    environment:
+      POSTGRES_HOST_AUTH_METHOD: trust
     image: "postgres:11"
     ports:
       - "5432:5432"
+    volumes:
+      - ./db:/var/lib/postgresql/data
   web:
     environment:
       HAY_DEBUG: "True"

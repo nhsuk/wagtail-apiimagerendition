@@ -8,8 +8,8 @@ with open(path.join(THIS_DIRECTORY, 'README.md'), encoding='utf-8') as f:
     LONG_DESCRIPTION = f.read()
 
 INSTALL_REQUIRES = [
-    'Django>=2.2.0,<2.3',
-    'wagtail>=2.5,<2.6',
+    'Django>=3.1,<3.2',
+    'wagtail>=2.10,<2.11',
 ]
 
 setup(
@@ -17,7 +17,7 @@ setup(
     version=__VERSION__,
     packages=find_packages(),
     include_package_data=True,
-    url='https://github.com/nhsuk/wagtail-adminstreamfieldmeta',
+    url='https://github.com/nhsuk/wagtail-apiimagerendition',
     license='MIT',
     description='Add renditions parameters in cms for images serve through the api',
     long_description=LONG_DESCRIPTION,
